@@ -40,6 +40,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Models\BindableBase.cs" />
+    <Compile Include="Models\Node.cs" />
+    <Compile Include="Models\NodeType.cs" />
+    <Compile Include="Models\PathItem.cs" />
     <Compile Include="Npv.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

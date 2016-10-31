@@ -1,0 +1,45 @@
+﻿<UserControl x:Class="WpfApp.Controls.NodeControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:WpfApp.Controls"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:models="clr-namespace:Core.Models;assembly=Core"
+             Width="60"
+             Height="60"
+             d:DesignHeight="60"
+             d:DesignWidth="60"
+             mc:Ignorable="d">
+
+    <d:UserControl.DataContext>
+        <models:Node Type="Decision" />
+    </d:UserControl.DataContext>
+
+    <Grid>
+        <ContextMenuService.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="Thêm nút con">
+                    <MenuItem Click="AddDecisionNode"
+                              Header="Nút quyết định" />
+                    <MenuItem Click="AddNormalNode"
+                              Header="Nút thường" />
+                </MenuItem>
+                <MenuItem Header="Loại nút">
+                    <MenuItem Header="Nút quyết định"
+                              Click="ChangeToDecision" />
+                    <MenuItem Header="Nút thường"
+                              Click="ChangeToNormal" />
+                </MenuItem>
+            </ContextMenu>
+        </ContextMenuService.ContextMenu>
+        <Rectangle Fill="Blue"
+                   Visibility="{Binding Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Decision}" />
+        <Ellipse Fill="Green"
+                 Visibility="{Binding Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Normal}" />
+        <TextBlock VerticalAlignment="Center"
+                   FontSize="20"
+                   Foreground="White"
+                   IsHitTestVisible="False"
+                   TextAlignment="Center" />
+    </Grid>
+</UserControl>

@@ -25,5 +25,24 @@ namespace Core
             }
             return cost + revenue;
         }
+
+        public static double CalculateNpv(double[] costs, double[] revenues, double[] rates)
+        {
+            double cost = 0;
+            if (rates.Length < costs.Length || rates.Length < revenues.Length)
+                throw new ArgumentException();
+            for (int i = costs.Length - 1; i >= 0; i--)
+            {
+                cost /= (1 + rates[i] / 100);
+                cost -= costs[i];
+            }
+            double revenue = 0;
+            for (int i = revenues.Length - 1; i >= 0; i--)
+            {
+                revenue /= (1 + rates[i] / 100);
+                revenue += revenues[i];
+            }
+            return cost + revenue;
+        }
     }
 }

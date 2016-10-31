@@ -1,0 +1,7 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:converters="clr-namespace:WpfApp.Converters">
+    <converters:NodeTypeToBrushConverter x:Key="NodeTypeToBrushConverter" />
+    <converters:NodeTypeToVisibilityConverter x:Key="NodeTypeToVisibilityConverter" />
+    <converters:NodePositionsConverter x:Key="NodePositionsConverter" />
+</ResourceDictionary>
