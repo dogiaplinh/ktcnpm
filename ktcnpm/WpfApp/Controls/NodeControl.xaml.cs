@@ -16,7 +16,8 @@ namespace WpfApp.Controls
 
         private void AddDecisionNode(object sender, RoutedEventArgs e)
         {
-            AddNewNode?.Invoke(this, NodeType.Decision);
+            if (AddNewNode != null)
+                AddNewNode(this, NodeType.Decision);
         }
 
         private void AddEndNode(object sender, RoutedEventArgs e)
@@ -26,7 +27,8 @@ namespace WpfApp.Controls
 
         private void AddNormalNode(object sender, RoutedEventArgs e)
         {
-            AddNewNode?.Invoke(this, NodeType.Normal);
+            if (AddNewNode != null)
+                AddNewNode(this, NodeType.Normal);
         }
 
         private void ChangeToDecision(object sender, RoutedEventArgs e)

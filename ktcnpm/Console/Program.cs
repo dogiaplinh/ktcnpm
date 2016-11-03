@@ -16,7 +16,7 @@ namespace ConsoleApp
             for (int i = 0; i < 20; i++)
             {
                 rate = i + 1;
-                Console.WriteLine($"Rate = {rate:##}\tNPV = {Core.Npv.CalculateNpv(costs, revenues, rate)}");
+                //Console.WriteLine($"Rate = {rate:##}\tNPV = {Core.Npv.CalculateNpv(costs, revenues, rate)}");
             }
         }
     }
