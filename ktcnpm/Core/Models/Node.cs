@@ -20,16 +20,16 @@ namespace Core.Models
             Parent = parent;
         }
 
-        public List<Node> Children { get; }
+        public List<Node> Children { get; private set; }
 
         public int Id { get; set; }
 
-        public Node Parent { get; }
+        public Node Parent { get; private set; }
 
         public NodeType Type
         {
             get { return type; }
-            set { SetProperty(ref type, value, nameof(Type)); }
+            set { SetProperty(ref type, value); }
         }
     }
 }
