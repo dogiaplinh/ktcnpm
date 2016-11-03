@@ -1,8 +1,7 @@
-﻿using System;
+﻿using Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Core
 {
@@ -43,6 +42,35 @@ namespace Core
                 revenue += revenues[i];
             }
             return cost + revenue;
+        }
+
+        public static List<List<int>> ListAllPaths(Node root, List<int> list = null)
+        {
+            List<List<int>> output = new List<List<int>>();
+            if (list == null)
+                list = new List<int>();
+            switch (root.Type)
+            {
+                case NodeType.Normal:
+                    foreach (var item in root.Paths)
+                    {
+                        output.AddRange(ListAllPaths(item.Target, list));
+                    }
+                    break;
+
+                case NodeType.Decision:
+                    foreach (var item in root.Paths)
+                    {
+                        var list2 = new List<int>(list);
+                        output.AddRange(ListAllPaths(item.Target, list2));
+                        output.Add(list2);
+                    }
+                    break;
+
+                case NodeType.End:
+                    return output;
+            }
+            return output;
         }
     }
 }

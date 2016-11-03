@@ -7,16 +7,21 @@ namespace WpfApp.Controls
 {
     public partial class NodeControl : UserControl
     {
-        public event EventHandler<NodeType> AddNewNode;
-
         public NodeControl()
         {
             InitializeComponent();
         }
 
+        public event EventHandler<NodeType> AddNewNode;
+
         private void AddDecisionNode(object sender, RoutedEventArgs e)
         {
             AddNewNode?.Invoke(this, NodeType.Decision);
+        }
+
+        private void AddEndNode(object sender, RoutedEventArgs e)
+        {
+            AddNewNode?.Invoke(this, NodeType.End);
         }
 
         private void AddNormalNode(object sender, RoutedEventArgs e)
@@ -30,6 +35,10 @@ namespace WpfApp.Controls
             if (node != null)
             {
                 node.Type = NodeType.Decision;
+                foreach (var item in node.Paths)
+                {
+                    item.Type = NodeType.Decision;
+                }
             }
         }
 
@@ -39,6 +48,10 @@ namespace WpfApp.Controls
             if (node != null)
             {
                 node.Type = NodeType.Normal;
+                foreach (var item in node.Paths)
+                {
+                    item.Type = NodeType.Normal;
+                }
             }
         }
     }

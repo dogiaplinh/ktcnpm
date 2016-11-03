@@ -7,7 +7,20 @@ namespace Core.Models
     public class Node : BindableBase
     {
         private static int s_counter = 0;
+        private bool error;
         private NodeType type;
+
+        public void CheckNode()
+        {
+            double probability = 0;
+            foreach (var item in Paths)
+            {
+                item.Target.CheckNode();
+                probability += item.Probability;
+            }
+            if (type == NodeType.Normal && probability < 1.0)
+                Error = true;
+        }
 
         public Node() : this(null)
         {
@@ -16,15 +29,23 @@ namespace Core.Models
         public Node(Node parent)
         {
             Id = s_counter++;
-            Children = new List<Node>();
+            Paths = new List<PathItem>();
             Parent = parent;
         }
 
-        public List<Node> Children { get; }
+        public bool Error
+        {
+            get { return error; }
+            set { SetProperty(ref error, value, nameof(Error)); }
+        }
 
         public int Id { get; set; }
 
         public Node Parent { get; }
+
+        public PathItem ParentPath { get; set; }
+
+        public List<PathItem> Paths { get; }
 
         public NodeType Type
         {

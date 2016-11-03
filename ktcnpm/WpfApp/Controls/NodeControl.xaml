@@ -12,7 +12,7 @@
              mc:Ignorable="d">
 
     <d:UserControl.DataContext>
-        <models:Node Type="Decision" />
+        <models:Node Type="End" />
     </d:UserControl.DataContext>
 
     <Grid>
@@ -23,6 +23,8 @@
                               Header="Nút quyết định" />
                     <MenuItem Click="AddNormalNode"
                               Header="Nút thường" />
+                    <MenuItem Click="AddEndNode"
+                              Header="Nút kết thúc" />
                 </MenuItem>
                 <MenuItem Header="Loại nút">
                     <MenuItem Header="Nút quyết định"
@@ -34,6 +36,17 @@
         </ContextMenuService.ContextMenu>
         <Rectangle Fill="Blue"
                    Visibility="{Binding Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Decision}" />
+        <Rectangle Fill="Red"
+                   RenderTransformOrigin="0.5,0.5"
+                   Visibility="{Binding Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=End}">
+            <Rectangle.RenderTransform>
+                <TransformGroup>
+                    <RotateTransform Angle="45" />
+                    <ScaleTransform ScaleY="0.8"
+                                    ScaleX="1.2" />
+                </TransformGroup>
+            </Rectangle.RenderTransform>
+        </Rectangle>
         <Ellipse Fill="Green"
                  Visibility="{Binding Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Normal}" />
         <TextBlock VerticalAlignment="Center"

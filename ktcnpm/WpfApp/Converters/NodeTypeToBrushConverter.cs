@@ -11,14 +11,23 @@ namespace WpfApp.Converters
     public class NodeTypeToBrushConverter : IValueConverter
     {
         private static Brush normalBrush = new SolidColorBrush(Parameters.NormalColor);
+        private static Brush endBrush = new SolidColorBrush(Parameters.EndColor);
         private static Brush decisionBrush = new SolidColorBrush(Parameters.DecisionColor);
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var type = (NodeType)value;
-            if (type == NodeType.Normal)
-                return normalBrush;
-            return decisionBrush;
+            switch (type)
+            {
+                case NodeType.Normal:
+                    return normalBrush;
+                case NodeType.Decision:
+                    return decisionBrush;
+                case NodeType.End:
+                    return endBrush;
+                default:
+                    return endBrush;
+            }
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

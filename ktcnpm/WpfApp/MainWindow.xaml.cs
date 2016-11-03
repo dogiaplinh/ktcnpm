@@ -17,10 +17,12 @@ namespace WpfApp
         private double firstLeft;
         private double firstTop;
         private NodePositionsConverter converter = new NodePositionsConverter();
+        private MainViewModel viewModel = new MainViewModel();
 
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = viewModel;
             Loaded += MainWindow_Loaded;
         }
 
@@ -44,7 +46,7 @@ namespace WpfApp
             Canvas.SetLeft(nodeControl, Canvas.GetLeft(parent) + 200);
             Canvas.SetTop(nodeControl, Canvas.GetTop(parent));
 
-            PathItem path = new PathItem
+            PathItem path = new PathItem(parentNode, node)
             {
                 Type = parentNode.Type
             };
@@ -60,6 +62,10 @@ namespace WpfApp
             multiBinding.Bindings.Add(new Binding("(Canvas.Top)") { Source = nodeControl });
             multiBinding.NotifyOnSourceUpdated = true;
             pathControl.SetBinding(PathControl.PositionsProperty, multiBinding);
+            pathControl.MouseDown += (s, e) =>
+            {
+                viewModel.Selected = ((FrameworkElement)s).DataContext;
+            };
 
             canvas.Children.Add(nodeControl);
             canvas.Children.Add(pathControl);
@@ -68,13 +74,9 @@ namespace WpfApp
 
         private void CreateRootNode()
         {
-            Node node = new Node
-            {
-                Type = NodeType.Decision
-            };
             NodeControl nodeControl = new NodeControl
             {
-                DataContext = node
+                DataContext = viewModel.Root
             };
             nodeControl.AddNewNode += NodeControl_AddNewNode;
             Canvas.SetLeft(nodeControl, 10);
@@ -126,7 +128,7 @@ namespace WpfApp
 
             int top = 0;
             foreach (UIElement child in canvas.Children)
-                if (top > Panel.GetZIndex(child))
+                if (top < Panel.GetZIndex(child))
                     top = Panel.GetZIndex(child);
             Panel.SetZIndex(sender as UIElement, top + 1);
         }

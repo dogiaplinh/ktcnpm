@@ -6,8 +6,10 @@ namespace WpfApp
 {
     public class Parameters
     {
-        public static Color NormalColor => Colors.Black;
+        public static Color NormalColor => Colors.Green;
 
-        public static Color DecisionColor => Colors.Green;
+        public static Color DecisionColor => Colors.Blue;
+
+        public static Color EndColor => Colors.Black;
     }
 }

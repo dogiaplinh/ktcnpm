@@ -5,40 +5,48 @@
              xmlns:local="clr-namespace:WpfApp.Controls"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:models="clr-namespace:Core.Models;assembly=Core"
+             x:Name="thisControl"
+             Height="50"
              d:DesignHeight="300"
              d:DesignWidth="300"
-             Height="50"
              RenderTransformOrigin="0.5,0.5"
              mc:Ignorable="d">
-    
+
     <d:UserControl.DataContext>
         <models:PathItem Name="demo"
                          Cost="500"
-                         Type="Decision"
-                         Probability="0.5" />
+                         Probability="0.5"
+                         Type="Decision" />
     </d:UserControl.DataContext>
 
     <UserControl.RenderTransform>
         <RotateTransform x:Name="rotateTransform" />
     </UserControl.RenderTransform>
-    
-    <Grid>
-        <Border Margin="0,0,8,0"
+
+    <Grid Background="Transparent">
+        <Border Margin="8,0,8,0"
                 VerticalAlignment="Center"
                 BorderBrush="{Binding Type, Converter={StaticResource NodeTypeToBrushConverter}}"
                 BorderThickness="1" />
         <Polyline HorizontalAlignment="Right"
                   VerticalAlignment="Center"
                   Fill="{Binding Type, Converter={StaticResource NodeTypeToBrushConverter}}"
-                  Points="0,10 10,5 0,0" />
-        <TextBlock Margin="0,0,0,25"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center">
-            <Run Text="{Binding Name}" />
-            <Run Text=" (" />
-            <Run Text="{Binding Probability}" />
-            <Run Text=")" />
-        </TextBlock>
+                  Points="0,10 10,5 0,0"
+                  Visibility="{Binding LeftToRight, ElementName=thisControl, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
+        <Polyline HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Fill="{Binding Type, Converter={StaticResource NodeTypeToBrushConverter}}"
+                  Points="10,10 0,5 10,0"
+                  Visibility="{Binding LeftToRight, ElementName=thisControl, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=False}" />
+        <StackPanel Orientation="Horizontal"
+                    Margin="0,0,0,25"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <TextBlock Text="{Binding Name}" />
+            <TextBlock Text="{Binding Probability, StringFormat='({0})'}"
+                       Visibility="{Binding Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Normal}"
+                       Margin="5,0,0,0" />
+        </StackPanel>
         <TextBlock Margin="0,25,0,0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"

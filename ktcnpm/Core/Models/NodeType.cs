@@ -9,6 +9,7 @@ namespace Core.Models
     public enum NodeType
     {
         Normal,
-        Decision
+        Decision,
+        End
     }
 }

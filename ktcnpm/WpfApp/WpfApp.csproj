@@ -77,9 +77,12 @@
     <Compile Include="Controls\PathControl.xaml.cs">
       <DependentUpon>PathControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\NodePositionsConverter.cs" />
     <Compile Include="Converters\NodeTypeToBrushConverter.cs" />
     <Compile Include="Converters\NodeTypeToVisibilityConverter.cs" />
+    <Compile Include="Converters\NullToVisibilityConverter.cs" />
+    <Compile Include="MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

@@ -4,4 +4,6 @@
     <converters:NodeTypeToBrushConverter x:Key="NodeTypeToBrushConverter" />
     <converters:NodeTypeToVisibilityConverter x:Key="NodeTypeToVisibilityConverter" />
     <converters:NodePositionsConverter x:Key="NodePositionsConverter" />
+    <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+    <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
 </ResourceDictionary>
