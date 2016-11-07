@@ -34,7 +34,7 @@ namespace WpfApp
         private void CreateChildNode(NodeControl parent, NodeType type)
         {
             Node parentNode = parent.DataContext as Node;
-            Node node = new Node(parentNode)
+            Node node = new Node
             {
                 Type = type
             };
@@ -66,23 +66,30 @@ namespace WpfApp
             {
                 viewModel.Selected = ((FrameworkElement)s).DataContext;
             };
+            nodeControl.DeleteNode += (s, e) =>
+            {
+                parentNode.Paths.Remove(path);
+                canvas.Children.Remove(nodeControl);
+                canvas.Children.Remove(pathControl);
+            };
 
             canvas.Children.Add(nodeControl);
             canvas.Children.Add(pathControl);
             CreateDragDrop(nodeControl);
         }
 
-        private void CreateRootNode()
+        private NodeControl CreateRootNode()
         {
-            NodeControl nodeControl = new NodeControl
-            {
-                DataContext = viewModel.Root
-            };
+            NodeControl nodeControl = new NodeControl();
+            Binding binding = new Binding("Root");
+            binding.Source = DataContext;
+            nodeControl.SetBinding(DataContextProperty, binding);
             nodeControl.AddNewNode += NodeControl_AddNewNode;
-            Canvas.SetLeft(nodeControl, 10);
-            Canvas.SetTop(nodeControl, canvas.ActualHeight / 2 - 30);
+            viewModel.Root.CanvasLeft = 50;
+            viewModel.Root.CanvasTop = canvas.ActualHeight / 2 - 30;
             canvas.Children.Add(nodeControl);
             CreateDragDrop(nodeControl);
+            return nodeControl;
         }
 
         private void NodeControl_AddNewNode(object sender, NodeType e)
@@ -136,6 +143,59 @@ namespace WpfApp
         private void DebugMethod([CallerMemberName] string name = null)
         {
             Debug.WriteLine(name);
+        }
+
+        private void LoadTree(object sender, RoutedEventArgs e)
+        {
+            canvas.Children.Clear();
+            var nodeControl = CreateRootNode();
+            viewModel.LoadTree();
+            foreach (var path in viewModel.Root.Paths)
+            {
+                CreateNodeRecursive(nodeControl, path);
+            }
+        }
+
+        private void CreateNodeRecursive(NodeControl parent, PathItem path)
+        {
+            Node parentNode = parent.DataContext as Node;
+            path.Target.ParentPath = path;
+            NodeControl nodeControl = new NodeControl
+            {
+                DataContext = path.Target
+            };
+            nodeControl.AddNewNode += NodeControl_AddNewNode;
+            canvas.Children.Add(nodeControl);
+            foreach (var p in path.Target.Paths)
+            {
+                CreateNodeRecursive(nodeControl, p);
+            }
+
+            PathControl pathControl = new PathControl
+            {
+                DataContext = path
+            };
+            MultiBinding multiBinding = new MultiBinding();
+            multiBinding.Converter = converter;
+            multiBinding.Bindings.Add(new Binding("(Canvas.Left)") { Source = parent });
+            multiBinding.Bindings.Add(new Binding("(Canvas.Top)") { Source = parent });
+            multiBinding.Bindings.Add(new Binding("(Canvas.Left)") { Source = nodeControl });
+            multiBinding.Bindings.Add(new Binding("(Canvas.Top)") { Source = nodeControl });
+            multiBinding.NotifyOnSourceUpdated = true;
+            pathControl.SetBinding(PathControl.PositionsProperty, multiBinding);
+            pathControl.MouseDown += (s, e) =>
+            {
+                viewModel.Selected = ((FrameworkElement)s).DataContext;
+            };
+            nodeControl.DeleteNode += (s, e) =>
+            {
+                parentNode.Paths.Remove(path);
+                canvas.Children.Remove(nodeControl);
+                canvas.Children.Remove(pathControl);
+            };
+
+            canvas.Children.Add(pathControl);
+            CreateDragDrop(nodeControl);
         }
     }
 }

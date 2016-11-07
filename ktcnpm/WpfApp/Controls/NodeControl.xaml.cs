@@ -14,6 +14,8 @@ namespace WpfApp.Controls
 
         public event EventHandler<NodeType> AddNewNode;
 
+        public event EventHandler DeleteNode;
+
         private void AddDecisionNode(object sender, RoutedEventArgs e)
         {
             if (AddNewNode != null)
@@ -45,6 +47,19 @@ namespace WpfApp.Controls
             }
         }
 
+        private void ChangeToEnd(object sender, RoutedEventArgs e)
+        {
+            var node = DataContext as Node;
+            if (node != null)
+            {
+                node.Type = NodeType.End;
+                foreach (var item in node.Paths)
+                {
+                    item.Type = NodeType.End;
+                }
+            }
+        }
+
         private void ChangeToNormal(object sender, RoutedEventArgs e)
         {
             var node = DataContext as Node;
@@ -56,6 +71,11 @@ namespace WpfApp.Controls
                     item.Type = NodeType.Normal;
                 }
             }
+        }
+        private void DeleteThisNode(object sender, RoutedEventArgs e)
+        {
+            if (DeleteNode != null)
+                DeleteNode(this, null);
         }
     }
 }

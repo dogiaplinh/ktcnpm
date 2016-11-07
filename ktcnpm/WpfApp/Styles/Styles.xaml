@@ -6,4 +6,5 @@
     <converters:NodePositionsConverter x:Key="NodePositionsConverter" />
     <converters:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
     <converters:NullToVisibilityConverter x:Key="NullToVisibilityConverter" />
+    <converters:IntegerToVisibilityConverter x:Key="IntegerToVisibilityConverter" />
 </ResourceDictionary>

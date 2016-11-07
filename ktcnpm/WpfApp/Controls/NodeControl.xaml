@@ -7,6 +7,8 @@
              xmlns:models="clr-namespace:Core.Models;assembly=Core"
              Width="60"
              Height="60"
+             Canvas.Left="{Binding CanvasLeft, Mode=TwoWay}"
+             Canvas.Top="{Binding CanvasTop, Mode=TwoWay}"
              d:DesignHeight="60"
              d:DesignWidth="60"
              mc:Ignorable="d">
@@ -27,11 +29,17 @@
                               Header="Nút kết thúc" />
                 </MenuItem>
                 <MenuItem Header="Loại nút">
-                    <MenuItem Header="Nút quyết định"
-                              Click="ChangeToDecision" />
-                    <MenuItem Header="Nút thường"
-                              Click="ChangeToNormal" />
+                    <MenuItem Click="ChangeToDecision"
+                              Header="Nút quyết định" />
+                    <MenuItem Click="ChangeToNormal"
+                              Header="Nút thường" />
+                    <MenuItem Click="ChangeToEnd"
+                              Header="Nút kết thúc"
+                              Visibility="{Binding Paths.Count, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter=Visible}" />
                 </MenuItem>
+                <MenuItem Click="DeleteThisNode"
+                          Header="Xóa nút"
+                          Visibility="{Binding Paths.Count, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter=Visible}" />
             </ContextMenu>
         </ContextMenuService.ContextMenu>
         <Rectangle Fill="Blue"
@@ -42,8 +50,8 @@
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <RotateTransform Angle="45" />
-                    <ScaleTransform ScaleY="0.8"
-                                    ScaleX="1.2" />
+                    <ScaleTransform ScaleX="1.15"
+                                    ScaleY="0.85" />
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>

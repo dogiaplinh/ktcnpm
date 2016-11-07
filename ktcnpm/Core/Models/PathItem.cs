@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Linq;
 
 namespace Core.Models
@@ -46,9 +47,10 @@ namespace Core.Models
             set { SetProperty(ref probability, value); }
         }
 
+        [JsonIgnore]
         public Node Source { get; private set; }
 
-        public Node Target { get; private set; }
+        public Node Target { get; set; }
 
         public NodeType Type
         {

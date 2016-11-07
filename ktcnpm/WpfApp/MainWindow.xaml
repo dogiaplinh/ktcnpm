@@ -25,7 +25,11 @@
         </Grid.RowDefinitions>
         <DockPanel>
             <Menu>
-                <MenuItem Header="File" />
+                <MenuItem Header="File">
+                    <MenuItem Header="Save Tree"
+                              Command="{Binding SaveTreeCommand}" />
+                    <MenuItem Header="Load Tree" Click="LoadTree" />
+                </MenuItem>
             </Menu>
         </DockPanel>
         <Grid Grid.Row="1">
