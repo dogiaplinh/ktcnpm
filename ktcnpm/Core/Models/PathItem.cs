@@ -29,31 +29,31 @@ namespace Core.Models
         public double Cost
         {
             get { return cost; }
-            set { SetProperty(ref cost, value, nameof(Cost)); }
+            set { SetProperty(ref cost, value); }
         }
 
-        public int Id { get; }
+        public int Id { get; private set; }
 
         public string Name
         {
             get { return name; }
-            set { SetProperty(ref name, value, nameof(Name)); }
+            set { SetProperty(ref name, value); }
         }
 
         public double Probability
         {
             get { return probability; }
-            set { SetProperty(ref probability, value, nameof(Probability)); }
+            set { SetProperty(ref probability, value); }
         }
 
-        public Node Source { get; }
+        public Node Source { get; private set; }
 
-        public Node Target { get; }
+        public Node Target { get; private set; }
 
         public NodeType Type
         {
             get { return type; }
-            set { SetProperty(ref type, value, nameof(Type)); }
+            set { SetProperty(ref type, value); }
         }
     }
 }

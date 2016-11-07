@@ -20,12 +20,12 @@ namespace WpfApp
         public Node Root
         {
             get { return root; }
-            set { SetProperty(ref root, value, nameof(Root)); }
+            set { SetProperty(ref root, value); }
         }
         public object Selected
         {
             get { return selected; }
-            set { SetProperty(ref selected, value, nameof(Selected)); }
+            set { SetProperty(ref selected, value); }
         }
     }
 }

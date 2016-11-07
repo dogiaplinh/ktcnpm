@@ -22,7 +22,8 @@ namespace WpfApp.Controls
 
         private void AddEndNode(object sender, RoutedEventArgs e)
         {
-            AddNewNode?.Invoke(this, NodeType.End);
+            if (AddNewNode != null)
+                AddNewNode(this, NodeType.End);
         }
 
         private void AddNormalNode(object sender, RoutedEventArgs e)
