@@ -43,8 +43,8 @@ namespace WpfApp
                 DataContext = node
             };
             nodeControl.AddNewNode += NodeControl_AddNewNode;
-            Canvas.SetLeft(nodeControl, Canvas.GetLeft(parent) + 200);
-            Canvas.SetTop(nodeControl, Canvas.GetTop(parent));
+            node.CanvasLeft = Canvas.GetLeft(parent) + 200;
+            node.CanvasTop = Canvas.GetTop(parent);
 
             PathItem path = new PathItem(parentNode, node)
             {

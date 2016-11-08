@@ -27,6 +27,9 @@ namespace Core.Models
                 Probability = 1;
         }
 
+        /// <summary>
+        /// Doanh thu/chi phí. Dấu dương tức là doanh thu, âm là chi phí
+        /// </summary>
         public double Cost
         {
             get { return cost; }

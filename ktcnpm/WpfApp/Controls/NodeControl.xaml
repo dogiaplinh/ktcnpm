@@ -50,8 +50,8 @@
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <RotateTransform Angle="45" />
-                    <ScaleTransform ScaleX="1.15"
-                                    ScaleY="0.85" />
+                    <ScaleTransform ScaleX="0.9"
+                                    ScaleY="0.6" />
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>

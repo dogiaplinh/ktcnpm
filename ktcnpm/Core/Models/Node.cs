@@ -8,7 +8,6 @@ namespace Core.Models
     public class Node : BindableBase
     {
         private static int s_counter = 0;
-        private bool error;
         private NodeType type;
 
         public Node()
@@ -22,16 +21,6 @@ namespace Core.Models
             Id = id;
             s_counter = id + 1;
             Paths = new ObservableCollection<PathItem>();
-        }
-
-        public double CanvasLeft { get; set; }
-
-        public double CanvasTop { get; set; }
-
-        public bool Error
-        {
-            get { return error; }
-            set { SetProperty(ref error, value); }
         }
 
         public int Id { get; set; }
@@ -58,5 +47,22 @@ namespace Core.Models
             if (type == NodeType.Normal && probability < 1.0)
                 Error = true;
         }
+
+        #region For UI
+
+        private bool error;
+
+        public double CanvasLeft { get; set; }
+
+        public double CanvasTop { get; set; }
+
+        [JsonIgnore]
+        public bool Error
+        {
+            get { return error; }
+            set { SetProperty(ref error, value); }
+        }
+
+        #endregion For UI
     }
 }

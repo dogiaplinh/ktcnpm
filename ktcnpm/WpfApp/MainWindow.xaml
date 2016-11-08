@@ -26,33 +26,41 @@
         <DockPanel>
             <Menu>
                 <MenuItem Header="File">
-                    <MenuItem Header="Save Tree"
+                    <MenuItem Header="Save File"
                               Command="{Binding SaveTreeCommand}" />
-                    <MenuItem Header="Load Tree" Click="LoadTree" />
+                    <MenuItem Header="Load File"
+                              Click="LoadTree" />
                 </MenuItem>
+                <MenuItem Header="Calculate NPV"
+                          Command="{Binding CalculateNpvCommand}" />
             </Menu>
         </DockPanel>
         <Grid Grid.Row="1">
-            <ScrollViewer HorizontalScrollBarVisibility="Auto"
-                          VerticalScrollBarVisibility="Auto">
-                <Canvas x:Name="canvas" />
+            <ScrollViewer HorizontalScrollBarVisibility="Visible"
+                          VerticalScrollBarVisibility="Visible">
+                <controls:AutosizeCanvas x:Name="canvas" />
             </ScrollViewer>
-            <ScrollViewer Width="200"
-                          HorizontalAlignment="Right"
-                          Background="LightGray"
-                          VerticalScrollBarVisibility="Auto"
-                          Visibility="{Binding Selected, Converter={StaticResource NullToVisibilityConverter}}">
-                <StackPanel Margin="10">
-                    <TextBlock Text="Name:" />
-                    <TextBox Text="{Binding Selected.Name, Mode=TwoWay}" />
-                    <TextBlock Text="Cost:" />
-                    <TextBox Text="{Binding Selected.Cost, Mode=TwoWay}" />
-                    <StackPanel Visibility="{Binding Selected.Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Normal}">
-                        <TextBlock Text="Probability:" />
-                        <TextBox Text="{Binding Selected.Probability, Mode=TwoWay}" />
+            <Grid Width="200"
+                  HorizontalAlignment="Right"
+                  Background="LightGray"
+                  Visibility="{Binding Selected, Converter={StaticResource NullToVisibilityConverter}}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                    <StackPanel Margin="10">
+                        <TextBlock Text="Name:" />
+                        <TextBox Text="{Binding Selected.Name, Mode=TwoWay}" />
+                        <TextBlock Text="Cost:" />
+                        <TextBox Text="{Binding Selected.Cost, Mode=TwoWay}" />
+                        <StackPanel Visibility="{Binding Selected.Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Normal}">
+                            <TextBlock Text="Probability:" />
+                            <TextBox Text="{Binding Selected.Probability, Mode=TwoWay}" />
+                        </StackPanel>
                     </StackPanel>
-                </StackPanel>
-            </ScrollViewer>
+                </ScrollViewer>
+                <Button Content="Hide"
+                        Command="{Binding HidePaneCommand}"
+                        HorizontalAlignment="Right"
+                        VerticalAlignment="Top" />
+            </Grid>
         </Grid>
     </Grid>
 </Window>
