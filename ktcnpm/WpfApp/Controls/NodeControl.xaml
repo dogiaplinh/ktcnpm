@@ -59,6 +59,7 @@
                  Visibility="{Binding Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Normal}" />
         <TextBlock VerticalAlignment="Center"
                    FontSize="20"
+                   Text="{Binding Id}"
                    Foreground="White"
                    IsHitTestVisible="False"
                    TextAlignment="Center" />

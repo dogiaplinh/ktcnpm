@@ -51,7 +51,9 @@
     <Compile Include="Models\Node.cs" />
     <Compile Include="Models\NodeType.cs" />
     <Compile Include="Models\PathItem.cs" />
+    <Compile Include="Models\RouteItem.cs" />
     <Compile Include="Npv.cs" />
+    <Compile Include="RouteHelper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
