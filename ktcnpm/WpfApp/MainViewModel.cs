@@ -5,6 +5,7 @@ using System;
 using System.IO;
 using System.Linq;
 using System.Windows.Input;
+using Core;
 
 namespace WpfApp
 {
@@ -70,6 +71,7 @@ namespace WpfApp
                 var node = JsonConvert.DeserializeObject<Node>(str);
                 Root = node;
             }
+            Npv.ListAllPaths(Root);
         }
 
         private void CalculateNpv()

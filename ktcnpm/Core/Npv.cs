@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 
 namespace Core
 {
@@ -67,27 +68,24 @@ namespace Core
         /// <remarks>
         /// Hàm này chưa chạy đúng, cần phải sửa
         /// </remarks>
-        public static List<List<int>> ListAllPaths(Node root)
+        public static void ListAllPaths(Node root)
         {
-            List<int> list = new List<int>();
-            List<List<int>> output = ListAllPathsRecursive(root, list);
-            for (int i = 0; i < output.Count; i++)
+            Dictionary<string, double> npv = new Dictionary<string, double>();
+            List<string> paths = root.getDecisionPath();
+            foreach (string item in paths)
             {
-                for (int j = output.Count - 1; j > i; j--)
+                //Console.WriteLine(item);
+                List<int> path = new List<int>();
+                foreach (string s in item.Split('_'))
                 {
-                    if (IsSubList(output[i], output[j]))
-                    {
-                        output.RemoveAt(j);
-                    }
-                    else if (IsSubList(output[j], output[i]))
-                    {
-                        output.RemoveAt(i);
-                        i--;
-                        break;
-                    }
+                    path.Add(Int32.Parse(s));
                 }
+                foreach (int i in path)
+                {
+                    Console.Write(i + " ");
+                }
+                Console.WriteLine();
             }
-            return output;
         }
 
         private static bool IsSubList(List<int> list, List<int> subList)
