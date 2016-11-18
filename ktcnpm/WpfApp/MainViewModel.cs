@@ -1,4 +1,5 @@
-﻿using Core.Models;
+﻿using Core;
+using Core.Models;
 using Microsoft.Win32;
 using Newtonsoft.Json;
 using System;
@@ -76,6 +77,7 @@ namespace WpfApp
 
         private void CalculateNpv()
         {
+            var routes = Npv.ListAllRoutes(root);
         }
 
         private void HidePane()

@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Collections;
 
 namespace Core
 {
@@ -68,69 +67,15 @@ namespace Core
         /// <remarks>
         /// Hàm này chưa chạy đúng, cần phải sửa
         /// </remarks>
-        public static void ListAllPaths(Node root)
+        public static List<RouteItem> ListAllRoutes(Node root)
         {
-            Dictionary<string, double> npv = new Dictionary<string, double>();
-            List<string> paths = root.getDecisionPath();
-            foreach (string item in paths)
-            {
-                //Console.WriteLine(item);
-                List<int> path = new List<int>();
-                foreach (string s in item.Split('_'))
-                {
-                    path.Add(Int32.Parse(s));
-                }
-                foreach (int i in path)
-                {
-                    Console.Write(i + " ");
-                }
-                Console.WriteLine();
-            }
+            RouteHelper helper = new RouteHelper(root);
+            return helper.ListAllRoutes();
         }
 
-        private static bool IsSubList(List<int> list, List<int> subList)
+        public static double CalculateNpv(Node node, RouteItem route)
         {
-            bool output = true;
-            if (subList.Count > list.Count)
-                return false;
-            for (int i = 0; i < subList.Count; i++)
-            {
-                if (subList[i] != list[i])
-                {
-                    output = false;
-                    break;
-                }
-            }
-            return output;
-        }
-
-        // Hàm này chạy chưa đúng
-        private static List<List<int>> ListAllPathsRecursive(Node root, List<int> list)
-        {
-            List<List<int>> output = new List<List<int>>();
-            switch (root.Type)
-            {
-                case NodeType.Normal:
-                    foreach (var item in root.Paths)
-                    {
-                        output.AddRange(ListAllPathsRecursive(item.Target, list));
-                    }
-                    break;
-
-                case NodeType.Decision:
-                    foreach (var item in root.Paths)
-                    {
-                        var list2 = new List<int>(list);
-                        list2.Add(item.Id);
-                        output.AddRange(ListAllPathsRecursive(item.Target, list2));
-                        output.Add(list2);
-                    }
-                    break;
-
-                case NodeType.End:
-                    return output;
-            }
-            return output;
+            return 0;
         }
     }
 }
