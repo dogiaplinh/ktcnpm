@@ -1,21 +1,16 @@
 ﻿using Newtonsoft.Json;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Core.Models
 {
     public class Node : BindableBase
     {
         private static int s_counter = 0;
-        private NodeType type;
         private bool select = false;
-        public bool Select
-        {
-            get { return select; }
-            set { SetProperty(ref select, value); }
-        }
+        private NodeType type;
 
         public Node()
         {
@@ -37,6 +32,12 @@ namespace Core.Models
 
         public ObservableCollection<PathItem> Paths { get; private set; }
 
+        public bool Select
+        {
+            get { return select; }
+            set { SetProperty(ref select, value); }
+        }
+
         public NodeType Type
         {
             get { return type; }
@@ -56,15 +57,16 @@ namespace Core.Models
         }
 
         // Get decision path
-        public List<string> getDecisionPath()
-        {   
-            // Node ket thuc 
+        public List<string> GetDecisionPath()
+        {
+            // Node ket thuc
             if (this.Type == NodeType.End) return null;
 
             // Danh sach quyet dinh cua cac nut con
             Dictionary<PathItem, List<string>> child = new Dictionary<PathItem, List<string>>();
-            foreach(PathItem item in this.Paths){
-                List<string> d = item.Target.getDecisionPath();
+            foreach (PathItem item in this.Paths)
+            {
+                List<string> d = item.Target.GetDecisionPath();
                 if (d != null) child[item] = d;
             }
 
@@ -72,7 +74,7 @@ namespace Core.Models
             List<string> decisionPath = new List<string>();
             //Neu nut la nut quyet dinh, them path quyet dinh vao day
             if (this.Type == NodeType.Decision)
-            {   
+            {
                 // Node quyet dinh dau tien (ko co node quyet dinh con)
                 if (child.Count == 0)
                 {
@@ -91,7 +93,6 @@ namespace Core.Models
                         }
                         else
                         {
-
                             foreach (string path in child[item])
                             {
                                 decisionPath.Add(path + "_" + item.Id);
@@ -117,7 +118,6 @@ namespace Core.Models
                         decisionPath = multiplyList(decisionPath, item);
                     }
                 }
-
             }
             return decisionPath;
         }
@@ -134,6 +134,7 @@ namespace Core.Models
             }
             return mul;
         }
+
         #region For UI
 
         private bool error;

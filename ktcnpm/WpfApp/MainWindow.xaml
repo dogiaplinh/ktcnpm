@@ -26,59 +26,92 @@
         <DockPanel>
             <Menu>
                 <MenuItem Header="File">
-                    <MenuItem Header="Save File"
+                    <MenuItem Header="Lưu file"
                               Command="{Binding SaveTreeCommand}" />
-                    <MenuItem Header="Load File"
+                    <MenuItem Header="Đọc file"
                               Click="LoadTree" />
                 </MenuItem>
-                <MenuItem Header="Calculate NPV"
+                <MenuItem Header="Tính NPV"
                           Command="{Binding CalculateNpvCommand}" />
             </Menu>
         </DockPanel>
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition/>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
             <ScrollViewer HorizontalScrollBarVisibility="Visible"
                           VerticalScrollBarVisibility="Visible">
                 <controls:AutosizeCanvas x:Name="canvas" />
             </ScrollViewer>
-            <Grid Grid.Column="1" Width="200">
+            <Grid Grid.Column="1"
+                  Width="200">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
                     <RowDefinition />
-                    <RowDefinition />
+                    <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
-
-                <Grid Width="200"
-                  HorizontalAlignment="Right"
-                  Background="LightGray">
-                    <ScrollViewer VerticalScrollBarVisibility="Auto">
-                        <StackPanel Margin="10">
-                            <TextBlock Text="Name:" />
-                            <TextBox Text="{Binding Selected.Name, Mode=TwoWay}" />
-                            <TextBlock Text="Cost:" />
-                            <TextBox Text="{Binding Selected.Cost, Mode=TwoWay}" />
-                            <StackPanel Visibility="{Binding Selected.Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Normal}">
-                                <TextBlock Text="Probability:" />
-                                <TextBox Text="{Binding Selected.Probability, Mode=TwoWay}" />
-                            </StackPanel>
-                        </StackPanel>
-                    </ScrollViewer>
-                </Grid>
+                <StackPanel>
+                    <TextBlock Margin="10,10,10,0"
+                               Text="Lãi suất ngân hàng" />
+                    <DockPanel VerticalAlignment="Center"
+                               Margin="10">
+                        <TextBox Text="{Binding ElementName=slValue, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                                 DockPanel.Dock="Right"
+                                 TextAlignment="Right"
+                                 Margin="10,0,0,0"
+                                 Width="40" />
+                        <Slider Maximum="20"
+                                Minimum="0"
+                                Value="{Binding DiscountRate, Mode=TwoWay}"
+                                TickPlacement="BottomRight"
+                                TickFrequency="0.5"
+                                IsSnapToTickEnabled="True"
+                                Name="slValue" />
+                    </DockPanel>
+                    <TextBlock Margin="10,30,10,10"
+                               Text="Kết quả:" />
+                </StackPanel>
                 <Grid Grid.Row="1">
-                    <ListView ItemsSource="{Binding Routes}" SelectedIndex="{Binding SelectedRoute, Mode=TwoWay}">
+                    <ListView ItemsSource="{Binding Routes}"
+                              BorderThickness="0"
+                              SelectedIndex="{Binding SelectedRoute, Mode=TwoWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Width="200">
-                                    <TextBlock Foreground="Black" Text="{Binding Description}" TextWrapping="Wrap" Margin="10,10,10,0" />
-                                    <TextBlock Foreground="Black" Text="{Binding Npv, StringFormat='NPV = \{0:#.##\}'}" TextWrapping="Wrap" Margin="10,0,10,10" />
+                                    <TextBlock Foreground="Black"
+                                               Text="{Binding Description}"
+                                               TextWrapping="Wrap"
+                                               Margin="10,10,10,0" />
+                                    <TextBlock Foreground="Black"
+                                               Text="{Binding Npv, StringFormat='NPV = \{0:#.##\}', FallbackValue=0}"
+                                               TextWrapping="Wrap"
+                                               Margin="10,0,10,10" />
                                 </StackPanel>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
+                <Grid Width="200"
+                      Height="300"
+                      Grid.Row="2"
+                      HorizontalAlignment="Right"
+                      Background="LightGray">
+                    <ScrollViewer VerticalScrollBarVisibility="Auto">
+                        <StackPanel Margin="10">
+                            <TextBlock Text="Tên:" />
+                            <TextBox Text="{Binding Selected.Name, Mode=TwoWay}" />
+                            <TextBlock Text="Chi phí/Doanh thu:" />
+                            <TextBox Text="{Binding Selected.Cost, Mode=TwoWay}" />
+                            <StackPanel Visibility="{Binding Selected.Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Normal}">
+                                <TextBlock Text="Xác suất:" />
+                                <TextBox Text="{Binding Selected.Probability, Mode=TwoWay}" />
+                            </StackPanel>
+                        </StackPanel>
+                    </ScrollViewer>
+                </Grid>
+
             </Grid>
         </Grid>
     </Grid>

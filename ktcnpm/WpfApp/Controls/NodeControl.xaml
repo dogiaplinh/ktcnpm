@@ -14,13 +14,15 @@
              mc:Ignorable="d">
 
     <d:UserControl.DataContext>
-        <models:Node Type="End" Select="True" />
+        <models:Node Type="End"
+                     Select="True" />
     </d:UserControl.DataContext>
 
     <Grid>
         <ContextMenuService.ContextMenu>
             <ContextMenu>
-                <MenuItem Header="Thêm nút con">
+                <MenuItem Header="Thêm nút con"
+                          Visibility="{Binding Type, Converter={StaticResource NodeTypeToInverseVisibilityConverter}, ConverterParameter=End}">
                     <MenuItem Click="AddDecisionNode"
                               Visibility="{Binding Type, Converter={StaticResource NodeTypeToInverseVisibilityConverter}, ConverterParameter=Decision}"
                               Header="Nút quyết định" />
@@ -51,8 +53,8 @@
             <Rectangle.RenderTransform>
                 <TransformGroup>
                     <RotateTransform Angle="45" />
-                    <ScaleTransform ScaleX="0.9"
-                                    ScaleY="0.6" />
+                    <ScaleTransform ScaleX="0.5"
+                                    ScaleY="0.3" />
                 </TransformGroup>
             </Rectangle.RenderTransform>
         </Rectangle>

@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 
 namespace Core.Models
@@ -8,36 +7,14 @@ namespace Core.Models
     public class PathItem : BindableBase
     {
         private static int s_counter = 0;
-        private double cost;
-        private string name;
-        private double probability;
-        private NodeType type;
-        private int depth = 0;
-        private bool select = false;
-        public bool Select
-        {
-            get { return select; }
-            set { SetProperty(ref select, value); }
-        }
-        public int Depth
-        {
-            get { return depth; }
-            set { depth = value; }
-        }
-        private bool check = false;
-
-        public bool Check
-        {
-            get { return check; }
-            set { check = value; }
-        }
         private double avgprob = 1;
-
-        public double AvgProb
-        {
-            get { return avgprob; }
-            set { avgprob = value; }
-        }
+        private bool check = false;
+        private double cost;
+        private int depth = 0;
+        private string name = "";
+        private double probability;
+        private bool select = false;
+        private NodeType type;
 
         public PathItem()
         {
@@ -55,6 +32,18 @@ namespace Core.Models
                 this.probability = 1;
         }
 
+        public double AvgProb
+        {
+            get { return avgprob; }
+            set { avgprob = value; }
+        }
+
+        public bool Check
+        {
+            get { return check; }
+            set { check = value; }
+        }
+
         /// <summary>
         /// Doanh thu/chi phí. Dấu dương tức là doanh thu, âm là chi phí
         /// </summary>
@@ -62,6 +51,12 @@ namespace Core.Models
         {
             get { return cost; }
             set { SetProperty(ref cost, value); }
+        }
+
+        public int Depth
+        {
+            get { return depth; }
+            set { depth = value; }
         }
 
         public int Id { get; private set; }
@@ -76,6 +71,12 @@ namespace Core.Models
         {
             get { return probability; }
             set { SetProperty(ref probability, value); }
+        }
+
+        public bool Select
+        {
+            get { return select; }
+            set { SetProperty(ref select, value); }
         }
 
         [JsonIgnore]

@@ -8,7 +8,6 @@ namespace Core
 {
     public static class Npv
     {
-        private static double rate = 0.1;
         /// <summary>
         /// Tính NPV dựa theo chi phí, doanh thu từng năm
         /// </summary>
@@ -72,7 +71,7 @@ namespace Core
         public static List<RouteItem> ListAllPaths(Node root)
         {
             Dictionary<string, double> npv = new Dictionary<string, double>();
-            List<string> paths = root.getDecisionPath();
+            List<string> paths = root.GetDecisionPath();
             List<RouteItem> routes = new List<RouteItem>();
             foreach (string item in paths)
             {
@@ -86,7 +85,7 @@ namespace Core
             return routes;
         }
 
-        public static double CalculateNpv(Node node, RouteItem route)
+        public static double CalculateNpv(Node node, RouteItem route, double rate)
         {
             double npv = 0;
             List<int> paths = route.Paths;

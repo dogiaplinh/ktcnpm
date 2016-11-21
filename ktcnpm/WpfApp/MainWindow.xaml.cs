@@ -171,7 +171,6 @@ namespace WpfApp
             viewModel.LoadTree();
             foreach (var path in viewModel.Root.Paths)
             {
-                path.Source = viewModel.Root;
                 CreateNodeRecursive(nodeControl, path);
             }
         }
@@ -179,14 +178,13 @@ namespace WpfApp
         private void CreateNodeRecursive(NodeControl parent, PathItem path)
         {
             Node parentNode = parent.DataContext as Node;
+            path.Source = parentNode;
             path.Target.ParentPath = path;
             NodeControl nodeControl = new NodeControl
             {
                 DataContext = path.Target
             };
-            if (parentNode.ParentPath != null)
-                parentNode.CanvasLeft = parentNode.ParentPath.Source.CanvasLeft + (parentNode.ParentPath.Source.Type == parentNode.Type ? 400 : 200);
-            else parentNode.CanvasLeft = 50;
+            path.Target.CanvasLeft = parentNode.CanvasLeft + (parentNode.Type == path.Target.Type ? 400 : 200);
 
             if ((parentNode.CanvasLeft + 150) / 400 > max)
             {
@@ -197,10 +195,9 @@ namespace WpfApp
             canvas.Children.Add(nodeControl);
             foreach (var p in path.Target.Paths)
             {
-                p.Source = parentNode;
                 CreateNodeRecursive(nodeControl, p);
             }
-            
+
 
             PathControl pathControl = new PathControl
             {
