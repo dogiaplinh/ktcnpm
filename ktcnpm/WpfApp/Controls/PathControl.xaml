@@ -16,7 +16,7 @@
         <models:PathItem Name="demo"
                          Cost="500"
                          Probability="0.5"
-                         Type="Decision" />
+                         Type="Decision" Select="True" />
     </d:UserControl.DataContext>
 
     <UserControl.RenderTransform>
@@ -38,6 +38,27 @@
                   Fill="{Binding Type, Converter={StaticResource NodeTypeToBrushConverter}}"
                   Points="10,10 0,5 10,0"
                   Visibility="{Binding LeftToRight, ElementName=thisControl, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=False}" />
+        <Grid Visibility="{Binding Select, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}">
+            <Border Margin="8,0,8,0"
+                VerticalAlignment="Center"
+                BorderBrush="Yellow"
+                BorderThickness="2" />
+            <Polyline HorizontalAlignment="Right"
+                  VerticalAlignment="Center"
+                  Fill="Yellow"
+                      Stroke="Yellow"
+                      StrokeThickness="1"
+                  Points="0,10 10,5 0,0"
+                  Visibility="{Binding LeftToRight, ElementName=thisControl, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=True}" />
+            <Polyline HorizontalAlignment="Left"
+                  VerticalAlignment="Center"
+                  Fill="Yellow"
+                      Stroke="Yellow"
+                      StrokeThickness="1"
+                  Points="10,10 0,5 10,0"
+                  Visibility="{Binding LeftToRight, ElementName=thisControl, Converter={StaticResource BooleanToVisibilityConverter}, ConverterParameter=False}" />
+        </Grid>
+        
         <StackPanel Orientation="Horizontal"
                     Margin="0,0,0,20"
                     HorizontalAlignment="Center"
@@ -50,6 +71,6 @@
         <TextBlock Margin="0,20,0,0"
                    HorizontalAlignment="Center"
                    VerticalAlignment="Center"
-                   Text="{Binding Id}" />
+                   Text="{Binding Cost}" />
     </Grid>
 </UserControl>

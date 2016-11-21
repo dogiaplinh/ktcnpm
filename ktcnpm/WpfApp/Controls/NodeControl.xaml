@@ -14,7 +14,7 @@
              mc:Ignorable="d">
 
     <d:UserControl.DataContext>
-        <models:Node Type="End" />
+        <models:Node Type="End" Select="True" />
     </d:UserControl.DataContext>
 
     <Grid>
@@ -22,13 +22,14 @@
             <ContextMenu>
                 <MenuItem Header="Thêm nút con">
                     <MenuItem Click="AddDecisionNode"
+                              Visibility="{Binding Type, Converter={StaticResource NodeTypeToInverseVisibilityConverter}, ConverterParameter=Decision}"
                               Header="Nút quyết định" />
                     <MenuItem Click="AddNormalNode"
                               Header="Nút thường" />
                     <MenuItem Click="AddEndNode"
                               Header="Nút kết thúc" />
                 </MenuItem>
-                <MenuItem Header="Loại nút">
+                <!--<MenuItem Header="Loại nút">
                     <MenuItem Click="ChangeToDecision"
                               Header="Nút quyết định" />
                     <MenuItem Click="ChangeToNormal"
@@ -36,7 +37,7 @@
                     <MenuItem Click="ChangeToEnd"
                               Header="Nút kết thúc"
                               Visibility="{Binding Paths.Count, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter=Visible}" />
-                </MenuItem>
+                </MenuItem>-->
                 <MenuItem Click="DeleteThisNode"
                           Header="Xóa nút"
                           Visibility="{Binding Paths.Count, Converter={StaticResource IntegerToVisibilityConverter}, ConverterParameter=Visible}" />
@@ -59,7 +60,6 @@
                  Visibility="{Binding Type, Converter={StaticResource NodeTypeToVisibilityConverter}, ConverterParameter=Normal}" />
         <TextBlock VerticalAlignment="Center"
                    FontSize="20"
-                   Text="{Binding Id}"
                    Foreground="White"
                    IsHitTestVisible="False"
                    TextAlignment="Center" />

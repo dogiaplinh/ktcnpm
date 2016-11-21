@@ -12,20 +12,47 @@ namespace Core.Models
         private string name;
         private double probability;
         private NodeType type;
+        private int depth = 0;
+        private bool select = false;
+        public bool Select
+        {
+            get { return select; }
+            set { SetProperty(ref select, value); }
+        }
+        public int Depth
+        {
+            get { return depth; }
+            set { depth = value; }
+        }
+        private bool check = false;
+
+        public bool Check
+        {
+            get { return check; }
+            set { check = value; }
+        }
+        private double avgprob = 1;
+
+        public double AvgProb
+        {
+            get { return avgprob; }
+            set { avgprob = value; }
+        }
 
         public PathItem()
         {
             Id = s_counter++;
         }
 
-        public PathItem(Node source, Node target) : this()
+        public PathItem(Node source, Node target)
+            : this()
         {
             Source = source;
             Target = target;
             Source.Paths.Add(this);
             Target.ParentPath = this;
-            if (target.Type == NodeType.End)
-                Probability = 1;
+            if (target.Type == NodeType.End || source.Type == NodeType.Decision)
+                this.probability = 1;
         }
 
         /// <summary>
@@ -52,7 +79,7 @@ namespace Core.Models
         }
 
         [JsonIgnore]
-        public Node Source { get; private set; }
+        public Node Source { get; set; }
 
         public Node Target { get; set; }
 

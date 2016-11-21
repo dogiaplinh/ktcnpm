@@ -10,5 +10,7 @@ namespace WpfApp
 
         public static Color DecisionColor { get { return Colors.Green; } }
         public static Color EndColor { get { return Colors.Black; } }
+
+        public static Color SelectColor { get { return Colors.Yellow; } }
     }
 }

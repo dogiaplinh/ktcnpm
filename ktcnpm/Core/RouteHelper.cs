@@ -36,7 +36,7 @@ namespace Core
             return routes;
         }
 
-        private void ReadPathNames(Node node, List<int> list, ref int current, ref string text)
+        public static void ReadPathNames(Node node, List<int> list, ref int current, ref string text)
         {
             switch (node.Type)
             {

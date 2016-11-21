@@ -5,6 +5,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Shapes;
 using WpfApp.Controls;
 using WpfApp.Converters;
 
@@ -18,6 +19,7 @@ namespace WpfApp
         private double firstTop;
         private NodePositionsConverter converter = new NodePositionsConverter();
         private MainViewModel viewModel = new MainViewModel();
+        private int max = 0;
 
         public MainWindow()
         {
@@ -43,8 +45,14 @@ namespace WpfApp
                 DataContext = node
             };
             nodeControl.AddNewNode += NodeControl_AddNewNode;
-            node.CanvasLeft = Canvas.GetLeft(parent) + 200;
+            node.CanvasLeft = Canvas.GetLeft(parent) + (node.Type == parentNode.Type ? 400 : 200);
             node.CanvasTop = Canvas.GetTop(parent);
+
+            if ((node.CanvasLeft + 150) / 400 > max)
+            {
+                max++;
+                DrawYearLine(max);
+            }
 
             PathItem path = new PathItem(parentNode, node)
             {
@@ -76,6 +84,17 @@ namespace WpfApp
             canvas.Children.Add(nodeControl);
             canvas.Children.Add(pathControl);
             CreateDragDrop(nodeControl);
+        }
+
+        private void DrawYearLine(int year)
+        {
+            YearControl yearControl = new YearControl();
+            yearControl.DataContext = new YearItem() { Year = year };
+            Canvas.SetLeft(yearControl, 400 * year - 150);
+            Binding binding = new Binding("ActualHeight");
+            binding.Source = canvas;
+            yearControl.SetBinding(HeightProperty, binding);
+            canvas.Children.Add(yearControl);
         }
 
         private NodeControl CreateRootNode()
@@ -119,7 +138,7 @@ namespace WpfApp
                 double top = Canvas.GetTop(control);
                 top = firstTop + p.Y - startPoint.Y;
                 left = firstLeft + p.X - startPoint.X;
-                Canvas.SetLeft(control, left);
+                //Canvas.SetLeft(control, left);
                 Canvas.SetTop(control, top);
             }
         }
@@ -152,6 +171,7 @@ namespace WpfApp
             viewModel.LoadTree();
             foreach (var path in viewModel.Root.Paths)
             {
+                path.Source = viewModel.Root;
                 CreateNodeRecursive(nodeControl, path);
             }
         }
@@ -164,12 +184,23 @@ namespace WpfApp
             {
                 DataContext = path.Target
             };
+            if (parentNode.ParentPath != null)
+                parentNode.CanvasLeft = parentNode.ParentPath.Source.CanvasLeft + (parentNode.ParentPath.Source.Type == parentNode.Type ? 400 : 200);
+            else parentNode.CanvasLeft = 50;
+
+            if ((parentNode.CanvasLeft + 150) / 400 > max)
+            {
+                max++;
+                DrawYearLine(max);
+            }
             nodeControl.AddNewNode += NodeControl_AddNewNode;
             canvas.Children.Add(nodeControl);
             foreach (var p in path.Target.Paths)
             {
+                p.Source = parentNode;
                 CreateNodeRecursive(nodeControl, p);
             }
+            
 
             PathControl pathControl = new PathControl
             {

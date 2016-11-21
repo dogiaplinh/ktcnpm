@@ -69,6 +69,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Controls\YearControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -84,11 +88,15 @@
     <Compile Include="Controls\PathControl.xaml.cs">
       <DependentUpon>PathControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\YearControl.xaml.cs">
+      <DependentUpon>YearControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BooleanToVisibilityConverter.cs" />
     <Compile Include="Converters\IntegerToVisibilityConverter.cs" />
     <Compile Include="Converters\NodePositionsConverter.cs" />
     <Compile Include="Converters\NodeTypeToBrushConverter.cs" />
     <Compile Include="Converters\NodeTypeToVisibilityConverter.cs" />
+    <Compile Include="Converters\NodeTypeToInverseVisibilityConverter.cs" />
     <Compile Include="Converters\NullToVisibilityConverter.cs" />
     <Compile Include="MainViewModel.cs" />
     <Compile Include="MainWindow.xaml.cs">

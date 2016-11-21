@@ -10,6 +10,12 @@ namespace Core.Models
     {
         private static int s_counter = 0;
         private NodeType type;
+        private bool select = false;
+        public bool Select
+        {
+            get { return select; }
+            set { SetProperty(ref select, value); }
+        }
 
         public Node()
         {

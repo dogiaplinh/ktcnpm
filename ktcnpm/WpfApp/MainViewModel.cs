@@ -5,8 +5,9 @@ using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 using System.Windows.Input;
-using Core;
+using System.Collections.ObjectModel;
 
 namespace WpfApp
 {
@@ -15,6 +16,67 @@ namespace WpfApp
         private double discountRate = 10; // tính theo đơn vị %
         private Node root;
         private object selected;
+        private ObservableCollection<RouteItem> routes = new ObservableCollection<RouteItem>();
+        private int selectedRoute = -1;
+
+        public int SelectedRoute
+        {
+            get { return selectedRoute; }
+            set
+            {
+                ClearSelectedRoute(root);
+                if (SetProperty(ref selectedRoute, value) && selectedRoute >= 0)
+                {
+                    Selected = null;
+                    int index = 0;
+                    SelectRoute(Routes[selectedRoute].Paths.Reverse<int>().ToList(), root, ref index);
+                }
+            }
+        }
+
+        private void SelectRoute(List<int> list, Node node, ref int index)
+        {
+            node.Select = true;
+            if (node.Type == NodeType.Decision)
+            {
+                int current = index;
+                if (node.Paths.Count == 0)
+                    return;
+                int currentBranch = current < list.Count ? list[current] : -1;
+                int i;
+                for (i = 0; i < node.Paths.Count; i++)
+                {
+                    if (node.Paths[i].Id == currentBranch)
+                        break;
+                }
+                node.Paths[i].Select = true;
+                index++;
+                SelectRoute(list, node.Paths[i].Target, ref index);
+            }
+            else
+            {
+                foreach (var item in node.Paths)
+                {
+                    item.Select = true;
+                    SelectRoute(list, item.Target, ref index);
+                }
+            }
+        }
+
+        private void ClearSelectedRoute(Node root)
+        {
+            root.Select = false;
+            foreach (var item in root.Paths)
+            {
+                item.Select = false;
+                ClearSelectedRoute(item.Target);
+            }
+        }
+
+        public ObservableCollection<RouteItem> Routes
+        {
+            get { return routes; }
+        }
 
         public MainViewModel()
         {
@@ -51,7 +113,13 @@ namespace WpfApp
         public object Selected
         {
             get { return selected; }
-            set { SetProperty(ref selected, value); }
+            set
+            {
+                if(SetProperty(ref selected, value) && value!=null)
+                {
+                    SelectedRoute = -1;
+                }
+            }
         }
 
         public void LoadTree()
@@ -72,12 +140,20 @@ namespace WpfApp
                 var node = JsonConvert.DeserializeObject<Node>(str);
                 Root = node;
             }
-            Npv.ListAllPaths(Root);
         }
 
         private void CalculateNpv()
         {
-            var routes = Npv.ListAllRoutes(root);
+            // Doan nay de test
+            List<RouteItem> routes = Npv.ListAllPaths(root);
+            Routes.Clear();
+            foreach (RouteItem r in routes)
+            {
+                double npv = Npv.CalculateNpv(root, r);
+                Console.WriteLine(r.ToString() + ": " + npv);
+                r.Npv = npv;
+                Routes.Add(r);
+            }
         }
 
         private void HidePane()
